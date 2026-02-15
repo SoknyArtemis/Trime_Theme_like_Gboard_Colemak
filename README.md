@@ -1,4 +1,4 @@
-# Trime-Theme-Gboard-Colemak
+# Trime Theme like Gboard Colemak
 
 這是一個同文輸入法仿 Gboard 的主題，Fork 自 [Trime_Theme](https://github.com/RzdPai/Trime_Theme)，我只是把原版的 QWERTY 佈局改成了 **Colemak**。
 
