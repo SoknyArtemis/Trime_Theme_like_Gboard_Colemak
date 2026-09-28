@@ -16,8 +16,8 @@ height:
   3: &jpgd3 24 #颜文字键盘2
   4: &jpgd4 30 #主键盘
   5: &jpgd5 39.5 #符号键盘
-  6: &hgap 10 #键盘横缝大小
-  7: &sgap 8 #键盘竖缝大小
+  6: &hgap 4 #键盘横缝大小（dp）。注：Trime 3.3.0~3.3.9 曾按原始像素渲染缝隙（10px≈3~4dp），3.3.10 起按 dp；此值按旧版紧凑观感取 4，嫌宽改 3、嫌窄改 5~6
+  7: &sgap 12 #键盘竖缝大小（dp）。旧版实际渲染约 12dp，取 12 对齐；嫌宽可降到 8~10
 
 #键盘高度
 round_corner:
@@ -28,51 +28,19 @@ round_corner:
 #界面风格、功能开关
 style:
   auto_caps: false #自動句首大寫:true|false|ascii
-  background_dim_amount: 0.5
-  root_background: keyboard_back_color # 整个键盘区+候选栏的背景图/色
   candidate_font: han.ttf  #候选字体
-  candidate_padding: 5  #候选项内边距
-  candidate_spacing: 0.5  #候选间距
-  candidate_text_size: 20  #候选字号
-  candidate_use_cursor: true #高亮候选项
-  candidate_view_height: 22 #候选区高度
-  color_scheme: default #配色方案
+  candidate_padding: 5  #候选项水平内边距（dp），相邻候选项的实际间距 = 2 × 此值
+  candidate_spacing: 1  #候选分割线宽度（dp；旧版此键为候选间距，新版间距由 candidate_padding 决定）
+  candidate_text_size: 20 #候选字号
+  candidate_corner_radius: *round1 #候选高亮背景圆角（与按键圆角同源，保持一致）
+  candidate_view_height: 32 #候选高亮块高度（chip 实际高度取此值）
+  comment_height: 4 #编码提示区高度（comment_position: right 时仅参与候选栏总高度=32+4=36，使高亮块上下各留 2dp 垂直居中）
+  color_scheme: default #配色方案（新版改为在 Trime 设置中选择，此键已无效但保留）
   comment_font: comment.ttf #编码提示字体
-  comment_height: 14 #编码提示区高度
-  comment_on_top: true #编码提示在上方或右侧
+  comment_position: right #编码提示位置：right / top / overlay（仿 Gboard/fcitx5：候选单行，提示小字在右；right 模式下 comment_height 不参与条目布局，仅抬高候选栏总高）
   comment_text_size: 12 #编码提示字号
   hanb_font: hanb.ttf #扩充字体
-  horizontal: true #水平模式
-  horizontal_gap: *hgap #键水平间距
-  layout:
-    position: fixed #候选窗口位置：left|right|left_up|right_up|fixed|bottom_left|bottom_right|top_left|top_right(left、right需要Android5.0以上)
-    min_length: 4 #候选窗口最小词长
-    max_length: 14 #超过字数则换行
-    sticky_lines: 1 #固顶行数
-    sticky_lines_land: 0 #横屏模式下的固顶行数
-    max_entries: 5 #候选窗口最大词条数
-    border: 0 #候选窗口边框宽度
-    max_width: 360 #最大宽度，超过则自动换行
-    max_height: 300 #最大高度
-    min_width: 0 #最小宽度
-    min_height: 50 #最小高度
-    margin_x: 5 #水平邊距 NOTE: margin_{x, y, bottom} 实际为 padding
-    margin_y: 5 #竖直边距
-    line_spacing: 0 #候选词的行间距(px)
-    line_spacing_multiplier: 1.2 #候选词的行间距(倍数)
-    real_margin: 3 #屏幕左右边缘和悬浮窗之间的距离 TODO: 在 4.0 时给 real_margin 与 spacing 换一个更适合的名字
-    spacing: 1 #屏幕上下边缘或预编辑上下边缘和悬浮窗之间的距离
-    round_corner: *round2 #候选窗口圆角
-    alpha: 0xff #透明度(0-255)
-    elevation: 0 #阴影(>=Android5.0)
-    background: background.png #颜色或者backgrounds目录下的图片文档名
-    movable: false #是否可移动窗口，或仅移动一次 true|false|once
-    all_phrases: false #显示所有长词
-  window: #悬浮窗口组件
-#    - {start: "", move: 'ㄓ ', end: ""}
-    - {start: "", composition: "%s", end: "", letter_spacing: 0.12} #letter_spacing需要Android5.0
-    - {start: "\n", label: "%s.", candidate: "%s", comment: "%s", end: "", sep: "☁️️"}
-  key_font: symbol.ttf #键盘字体
+  horizontal_gap: *hgap #键水平间距（dp）
   key_height: *jpgd4 #键高
   key_long_text_size: 16 #长标签字号
   key_text_size: 24 #键字号
@@ -85,22 +53,17 @@ style:
   locale: zh_CN #缺省语言 zh_TW,zh_CN,zh_HK,""
   keyboard_height: 250 #锁定键盘高度，避免切换时键盘高度变化而造成闪烁
   keyboard_height_land: 200 #锁定横屏下键盘高度，避免切换时键盘高度变化而造成闪烁
-  preview_font: latin.ttf #按键提示字体
-  preview_height: 30 #按键提示高度
-  preview_offset: -32 #按键提示纵向偏移
-  preview_text_size: 40 #按键提示字号
-  proximity_correction: true #按键纠错
-  reset_ascii_mode: false #显示键盘时重置为中文状态
+  popup_font: latin.ttf #按键提示字体（替代旧版 preview_font）
+  popup_height: 40 #按键提示气泡高度（dp，用于气泡定位，应与 popup_key_height 一致）
+  popup_key_height: 40 #气泡内文字行高（dp；不设置时为 0，气泡中的文字会因高度为 0 而不可见）
+  popup_text_size: 40 #按键提示字号（替代旧版 preview_text_size）
+  reset_ascii_mode_on_focus_change: false #焦点变更弹起键盘时重置为中文状态（替代旧版 reset_ascii_mode）
   round_corner: *round1 #按键圆角半径
   shadow_radius: 0.0 #按键阴影半径
-  speech_opencc_config: none #语音输入简繁转换
   symbol_font: symbol.ttf #符号字体
   symbol_text_size: 10 #符号字号
   text_font: latin.ttf #编码字体
-  #text_height: 32 #编码区高度
-  text_size: 14 #编码区字号
-  vertical_correction: -5
-  vertical_gap: *sgap #键盘行距
+  vertical_gap: *sgap #键盘行距（dp）
   enter_label_mode: 0  #是否使用App提供的ActionLabel内容作为Enter键的文本（由于多数App没有适配ActionLable，实际影响不大）。0不使用，1只使用actionlabel，2优先使用，3当其他方式没有获得label时才读取actionlabel
   enter_labels:  # 定义Enter键的文本
     go: ➜
@@ -111,9 +74,83 @@ style:
     send: 发送
     default: Enter   # 定义默认Enter键的文本
 
+# 预编辑（编码）区参数，替代旧版 style.text_size
+preedit:
+  alpha: 1 #不透明（新版默认 0.8 会半透明）
+  foreground:
+    font_size: 18 #编码区字号（原 14 偏小，放大一档接近候选字号 20；如仍偏小可再调至 20）
+
+# 候选悬浮窗参数，替代旧版 style.layout / style.window
+window:
+  insets:               # 窗口内边距（原 layout.margin_x / margin_y）
+    vertical: 5
+    horizontal: 5
+  item_padding:         # 候选项水平内边距
+    horizontal: 5
+  min_width: 0          # 原layout.min_width
+  corner_radius: *round2 # 原layout.round_corner 候选窗口圆角
+  border: 0             # 原layout.border
+  alpha: 1              # 原layout.alpha 0xff（新版为 0~1 浮点）
+  foreground:           # 前景字号（原候选字号20 / 编码提示12）
+    label_font_size: 20
+    text_font_size: 20
+    comment_font_size: 12
+
+# 候选栏工具条（Trime 3.3.x：无编码输入时 QuickBar 显示的按钮组，配置参照官方同文风主题）
+# 左侧 primary_button 固定；buttons 从右向左排列；ic@ 前缀为应用内置 Material 图标。
+tool_bar:
+  button_spacing: 5 # 按钮间距
+  button_font: iconfont.ttf # 按钮字体（ic@ 图标由应用内置 Iconics 渲染，不依赖此字体文件）
+  back_style: "ic@arrow-left" # 左侧返回按钮样式
+  # 左侧固定主按钮：弹出切换选项菜单，长按进入设置
+  primary_button:
+    background:
+      type: circle # 高亮形状 circle|rectangle
+      corner_radius: 10
+      normal: 0x00 # 正常状态背景（透明）
+      highlight: hilited_candidate_button_color # 高亮状态背景色
+      vertical_inset: 4
+      horizontal_inset: 4
+    foreground:
+      style: "ic@dots_horizontal"
+      normal: candidate_text_color
+      padding: 10
+    action: menu_keyboard
+    long_press_action: Settings
+  hide_button: &hide_button
+    foreground:
+      style: "ic@keyboard_close"
+      normal: candidate_text_color
+    action: Hide
+  emoji_button: &emoji_button
+    foreground:
+      style: "ic@emoticon"
+    action: liquid_keyboard_emoji
+  clipboard_button: &clipboard_button
+    foreground:
+      style: "ic@clipboard"
+    action: liquid_keyboard_clipboard # 经兼容处理：新版引擎打开剪贴板窗口，旧版打开剪贴标签页
+  edit_button: &edit_button
+    foreground:
+      style: "ic@cursor_text"
+    action: Keyboard_numberb # 编辑键盘（本主题无 editor 键盘，由 numberb 承担）
+  henkan_button: &henkan_button
+    foreground:
+      option_styles: ["简", "繁"] # 根据 action 的 toggle 状态切换显示
+      font_size: 18
+      padding: 10
+    action: Henkan
+  full_shape_button: &full_shape_button
+    foreground:
+      option_styles: ["ic@moon_full", "ic@moon_new"]
+    action: Zenkaku_Hankaku
+  # 右侧按钮列表（从右向左排列；视觉从左到右 = 简繁、全半角、编辑、剪贴板、表情、收起）
+  buttons: [ *hide_button, *emoji_button, *clipboard_button, *edit_button, *full_shape_button, *henkan_button ]
+
 # 最好保留一项，防止其他主题使用 __include 时无法加载
 fallback_colors:
   candidate_text_color: text_color
+  root_background: keyboard_back_color # 整个键盘区+候选栏的背景色（原 style.root_background，新版改为在此定义）
 # 以下值是程序内置的，你也可以在这里自定义，这会覆盖默认值
 #
 #  comment_text_color: candidate_text_color
@@ -141,8 +178,8 @@ fallback_colors:
 #  off_key_text_color: key_text_color
 #  on_key_back_color: hilited_key_back_color
 #  on_key_text_color: hilited_key_text_color
-#  preview_back_color: key_back_color
-#  preview_text_color: key_text_color
+#  popup_back_color: key_back_color
+#  popup_text_color: key_text_color
 #  shadow_color: border_color
 #  root_background: back_color # 整个键盘区+候选栏的背景图/色
 #  candidate_background: back_color #候选栏的整体背景图/色
@@ -201,8 +238,8 @@ preset_color_schemes:
     label_color: *color17 #标签
     off_key_back_color: *color15  #按键关闭状态背景
     off_key_text_color: *color8 #按键关闭状态文本
-    preview_back_color: *color2 #按键提示背景
-    preview_text_color: *color13 #按键提示文本
+    popup_back_color: *color2 #按键提示背景
+    popup_text_color: *color13 #按键提示文本
     text_color: *color15 #编码
     text_back_color: *color17 #编码区背景
     bkg: *color14 #空格键背景色
@@ -251,8 +288,8 @@ preset_color_schemes:
     label_color: *color6 #标签
     off_key_back_color: *color4  #按键关闭状态背景
     off_key_text_color: *color8 #按键关闭状态文本
-    preview_back_color: *color2 #按键提示背景
-    preview_text_color: *color1 #按键提示文本
+    popup_back_color: *color2 #按键提示背景
+    popup_text_color: *color1 #按键提示文本
     text_color: *color6 #编码
     text_back_color: *color2 #编码区背景
     bkg: *color2 #空格键背景色
@@ -281,29 +318,30 @@ liquid_keyboard:
   # 目前只能直接写参数，不支持变量或者fallback机制。
   # 缺少参数时，自动从style中加载参数。除非需要指定liquid_keyboard使用与主键盘不同的背景色、背景图，否则不应设置被注释掉的参数。
   author: "tumuyan"
-  row: 6              #每屏最多显示多少行按键
-  row_land: 5         #横屏每屏最多显示多少行按键
-  key_height: 40      #按键高度
-  key_height_land: 40 #横屏模式按键高度
+  row: 6              #每屏最多显示多少行按键（3.3.x 引擎不读取此键；保留以兼容更旧的引擎）
+  row_land: 5         #横屏每屏最多显示多少行按键（同上）
+  key_height: 40      #按键高度（3.3.x 引擎按文字自适应高度，此值仅作参考）
+  key_height_land: 40 #横屏模式按键高度（同上）
   single_width: 60    #single类型的按键宽度
-  vertical_gap: 8     #纵向按键间隙
-  margin_x: 2       #左右按键间隙的1/2
+  vertical_gap: 1     #纵向按键间隙（3.3.x 引擎不读取此键；保留以兼容更旧的引擎）
+  margin_x: 5         #按键间隙（左右上下统一使用此值；取 5 与官方默认/同文风主题一致）
   fixed_key_bar: # 固定按键条
     position: bottom  # 摆放位置（在滚动区域的……） top|bottom|left|right
     keys: # 按键（显示名称为对应的label，不能放太多）
+      - liquid_keyboard_exit
       - space1
       - BackSpace
       - Return2
       - liquid_keyboard_clipboard
       - liquid_keyboard_tabs
-      - liquid_keyboard_exit
-  keyboards: [emoji, math, ascii, cn, history, clipboard, collection, draft, symbollist, list, ids, symbol, tabs, pinyin, script_symbols, jp, grease, rusa, korea, lation, yinbiao, unit, yanwenzi, combing, emoji_full, candidate]  #tab列表
+  # Trime 2025-09+/3.3.x：CANDIDATE / CLIPBOARD / COLLECTION / DRAFT 类型的标签页已被移除，
+  # 写了也会被静默丢弃。剪贴板/收藏改由独立窗口承载（固定键条上的"剪贴"按钮经由
+  # liquid_keyboard 命令的兼容处理仍可打开它，收藏夹在该窗口内切换）；草稿功能已删除。
+  # 候选栏空态的功能按钮由本文件 tool_bar 段配置（QuickBar），与 liquid_keyboard 无关。
+  keyboards: [emoji, math, ascii, cn, history, symbollist, list, ids, symbol, tabs, pinyin, script_symbols, jp, grease, rusa, korea, lation, yinbiao, unit, yanwenzi, combing, emoji_full]  #tab列表
   tabs:
     name: 更多
     type: TABS
-  candidate:
-    name: 候选
-    type: CANDIDATE
   history:
     name: 常用
     type: HISTORY
@@ -314,15 +352,6 @@ liquid_keyboard:
     type: SINGLE
     name: 全emoji
     keys: "😀😃😄😁😆😅🤣😂🙂🙃🫠😉😊😇🥰😍🤩😘😗☺😚😙🥲😋😛😜🤪😝🤑🤗🤭🫢🫣🤫🤔🫡🤐🤨😐😑😶🫥😏😒🙄😬🤥😌😔😪🤤😴😷🤒🤕🤢🤮🤧🥵🥶🥴😵🤯🤠🥳🥸😎🤓🧐😕🫤😟🙁☹😮😯😲😳🥺🥹😦😧😨😰😥😢😭😱😖😣😞😓😩😫🥱😤😡😠🤬😈👿💀☠💩🤡👹👺👻👽👾🤖😺😸😹😻😼😽🙀😿😾🙈🙉🙊💌💘💝💖💗💓💞💕💟❣💔❤🧡💛💚💙💜🤎🖤🤍💋💯💢💥💫💦💨🕳💬🗨🗯💭💤👋🤚🖐✋🖖🫱🫲🫳🫴👌🤌🤏✌🤞🫰🤟🤘🤙👈👉👆🖕👇☝🫵👍👎✊👊🤛🤜👏🙌🫶👐🤲🤝🙏✍💅🤳💪🦾🦿🦵🦶👂🦻👃🧠🫀🫁🦷🦴👀👁👅👄🫦👶🧒👦👧🧑👱👨🧔👩🧓👴👵🙍🙎🙅🙆💁🙋🧏🙇🤦🤷👮🕵💂🥷👷🫅🤴👸👳👲🧕🤵👰🤰🫃🫄🤱👼🎅🤶🦸🦹🧙🧚🧛🧜🧝🧞🧟🧌💆💇🚶🧍🧎🏃💃🕺🕴👯🧖🧗🤺🏇⛷🏂🏌🏄🚣🏊⛹🏋🚴🚵🤸🤼🤽🤾🤹🧘🛀🛌👭👫👬💏💑👪🗣👤👥🫂👣🏻🏼🏽🏾🏿🦰🦱🦳🦲🐵🐒🦍🦧🐶🐕🦮🐩🐺🦊🦝🐱🐈🦁🐯🐅🐆🐴🐎🦄🦓🦌🦬🐮🐂🐃🐄🐷🐖🐗🐽🐏🐑🐐🐪🐫🦙🦒🐘🦣🦏🦛🐭🐁🐀🐹🐰🐇🐿🦫🦔🦇🐻🐨🐼🦥🦦🦨🦘🦡🐾🦃🐔🐓🐣🐤🐥🐦🐧🕊🦅🦆🦢🦉🦤🪶🦩🦚🦜🐸🐊🐢🦎🐍🐲🐉🦕🦖🐳🐋🐬🦭🐟🐠🐡🦈🐙🐚🪸🐌🦋🐛🐜🐝🪲🐞🦗🪳🕷🕸🦂🦟🪰🪱🦠💐🌸💮🪷🏵🌹🥀🌺🌻🌼🌷🌱🪴🌲🌳🌴🌵🌾🌿☘🍀🍁🍂🍃🪹🪺🍄🍇🍈🍉🍊🍋🍌🍍🥭🍎🍏🍐🍑🍒🍓🫐🥝🍅🫒🥥🥑🍆🥔🥕🌽🌶🫑🥒🥬🥦🧄🧅🥜🫘🌰🍞🥐🥖🫓🥨🥯🥞🧇🧀🍖🍗🥩🥓🍔🍟🍕🌭🥪🌮🌯🫔🥙🧆🥚🍳🥘🍲🫕🥣🥗🍿🧈🧂🥫🍱🍘🍙🍚🍛🍜🍝🍠🍢🍣🍤🍥🥮🍡🥟🥠🥡🦀🦞🦐🦑🦪🍦🍧🍨🍩🍪🎂🍰🧁🥧🍫🍬🍭🍮🍯🍼🥛☕🫖🍵🍶🍾🍷🍸🍹🍺🍻🥂🥃🫗🥤🧋🧃🧉🧊🥢🍽🍴🥄🔪🫙🏺🌍🌎🌏🌐🗺🗾🧭🏔⛰🌋🗻🏕🏖🏜🏝🏞🏟🏛🏗🧱🪨🪵🛖🏘🏚🏠🏡🏢🏣🏤🏥🏦🏨🏩🏪🏫🏬🏭🏯🏰💒🗼🗽⛪🕌🛕🕍⛩🕋⛲⛺🌁🌃🏙🌄🌅🌆🌇🌉♨🎠🛝🎡🎢💈🎪🚂🚃🚄🚅🚆🚇🚈🚉🚊🚝🚞🚋🚌🚍🚎🚐🚑🚒🚓🚔🚕🚖🚗🚘🚙🛻🚚🚛🚜🏎🏍🛵🦽🦼🛺🚲🛴🛹🛼🚏🛣🛤🛢⛽🛞🚨🚥🚦🛑🚧⚓🛟⛵🛶🚤🛳⛴🛥🚢✈🛩🛫🛬🪂💺🚁🚟🚠🚡🛰🚀🛸🛎🧳⌛⏳⌚⏰⏱⏲🕰🕛🕧🕐🕜🕑🕝🕒🕞🕓🕟🕔🕠🕕🕡🕖🕢🕗🕣🕘🕤🕙🕥🕚🕦🌑🌒🌓🌔🌕🌖🌗🌘🌙🌚🌛🌜🌡☀🌝🌞🪐⭐🌟🌠🌌☁⛅⛈🌤🌥🌦🌧🌨🌩🌪🌫🌬🌀🌈🌂☂☔⛱⚡❄☃⛄☄🔥💧🌊🎃🎄🎆🎇🧨✨🎈🎉🎊🎋🎍🎎🎏🎐🎑🧧🎀🎁🎗🎟🎫🎖🏆🏅🥇🥈🥉⚽⚾🥎🏀🏐🏈🏉🎾🥏🎳🏏🏑🏒🥍🏓🏸🥊🥋🥅⛳⛸🎣🤿🎽🎿🛷🥌🎯🪀🪁🎱🔮🪄🎮🕹🎰🎲🧩🧸🪅🪩🪆♠♥♦♣♟🃏🀄🎴🔫🎭🖼🎨🧵🪡🧶🪢👓🕶🥽🥼🦺👔👕👖🧣🧤🧥🧦👗👘🥻🩱🩲🩳👙👚👛👜👝🛍🎒🩴👞👟🥾🥿👠👡🩰👢👑👒🎩🎓🧢🪖⛑📿💄💍💎🔇🔈🔉🔊📢📣📯🔔🔕🎼🎵🎶🎙🎚🎛🎤🎧📻🎷🪗🎸🎹🎺🎻🪕🥁🪘📱📲☎📞📟📠🔋🪫🔌💻🖥🖨⌨🖱🖲💽💾💿📀🧮🎥🎞📽🎬📺📷📸📹📼🔍🔎🕯💡🔦🏮🪔📔📕📖📗📘📙📚📓📒📃📜📄📰🗞📑🔖🏷💰🪙💴💵💶💷💸💳🧾💹✉📧📨📩📤📥📦📫📪📬📭📮🗳✏✒🖋🖊🖌🖍📝💼📁📂🗂📅📆🗒🗓📇📈📉📊📋📌📍📎🖇📏📐✂🗃🗄🗑🔒🔓🔏🔐🔑🗝💣🔨🪓⛏⚒🛠🗡⚔🪃🏹🛡🪚🔧🪛🔩⚙🗜⚖🦯🔗⛓🪝🧰🧲🪜⚗🧪🧫🧬🔬🔭📡💉🩸💊🩹🩼🩺🩻🚪🛗🪞🪟🛏🛋🪑🚽🪠🚿🛁🪤🪒🧴🧷🧹🧺🧻🪣🧼🫧🪥🧽🧯🛒🧿🪬🚬⚰🪦⚱🗿🪧🪪🏧🚮🚰♿🚹🚺🚻🚼🚾🛂🛃🛄🛅⚠🚸⛔🚫🚳🚭🚯🚱🚷📵🔞☢☣⬆↗➡↘⬇↙⬅↖↕↔↩↪⤴⤵🔃🔄🔙🔚🔛🔜🔝🛐⚛🕉✡☸☯✝☦☪☮🕎🔯♈♉♊♋♌♍♎♏♐♑♒♓⛎🔀🔁🔂▶⏩⏭⏯◀⏪⏮🔼⏫🔽⏬⏸⏹⏺⏏🎦🔅🔆📶📳📴♀♂⚧✖➕➖➗🟰♾‼⁉❓❔❕❗〰💱💲⚕♻⚜🔱📛🔰⭕✅☑✔❌❎➰➿〽✳✴❇©®™🔟🔠🔡🔢🔣🔤🅰🆎🅱🆑🆒🆓ℹ🆔Ⓜ🆕🆖🅾🆗🅿🆘🆙🆚🈁🈂🈷🈶🈯🉐🈹🈚🈲🉑🈸🈴🈳㊗㊙🈺🈵🔴🟠🟡🟢🔵🟣🟤⚫⚪🟥🟧🟨🟩🟦🟪🟫⬛⬜◼◻◾◽▪▫🔶🔷🔸🔹🔺🔻💠🔘🔳🔲🏁🚩🎌🏴🏳"
-  clipboard:
-    type: CLIPBOARD
-    name: 剪贴
-  collection:
-    type: COLLECTION
-    name: 收藏
-  draft:
-    type: DRAFT
-    name: 草稿
   math:   #tab名称
     type: SINGLE
     name: 数学
@@ -344,7 +373,7 @@ liquid_keyboard:
       - ……
       - { click: "-" }
       - { click: "——", label: "破折" }
-      - { click: "" } # 内容为空可以强制令键盘从此处新起一行
+      # 注：旧引擎支持 {click: ""} 强制换行，3.3.x 引擎会将其渲染为空白按键，故删除
       - （
       - ）
       - 【
@@ -401,7 +430,7 @@ liquid_keyboard:
     name: "音标"
     keys: ["a:", "ɔ:", "ɜː", "i:", "u:", "ʌ", "ɒ", "ə", "ɪ", "ʊ", "e", "æ", "eɪ", "aɪ", "ɔɪ", "ɪə", "eə", "ʊə", "əʊ", "aʊ", "p", "t", "k", "f", "θ", "s", "b", "d", "g", "v", "ð", "z", "ʃ", "h", "ts", "tʃ", "j", "tr", "ʒ", "r", "dz", "dʒ", "dr", "w", "m", "n", "ŋ", "l"]
   yanwenzi:
-    type: VAR_LENGTH
+    type: SINGLE #原 VAR_LENGTH 类型已在 Trime v3.3.x 移除，官方主题改用 SINGLE
     name: "颜文字"
     keys: ["⎛⎝≥⏝⏝≤⎠⎞", "^_^", "^ω^", "^o^", "~\\(≧▽≦)/~", "*^_^*", "↖(^ω^)↗", "(^o^)／", "(=^▽^=)", "=^_^=", "(*^ω^*)", "٩(๑^o^๑)۶", "o(￣▽￣)o", "Y(^_^)Y", "٩( 'ω' )و", "╰(*´︶`*)╯", "*罒▽罒*", "ヾ ^_^♪", "=￣ω￣=", "︿(￣︶￣)︿", "(´▽｀)ノ♪", "乁( ˙ ω˙乁)", "✧*｡٩(ˊωˋ*)و✧*｡", "～(￣▽￣～)(～￣▽￣)～", "QwQ", "(●—●)", "(๑• . •๑)", "ヾ(≧O≦)〃嗷~", "罒ω罒", "(｡ì _ í｡)", "(๑•ี_เ•ี๑)", "ㄟ(≧◇≦)ㄏ", "(*/ω＼*)", "●▽●", "٩(๑òωó๑)۶", "✺◟(∗❛ัᴗ❛ั∗)◞✺", "( σ'ω')σ", "♡＾▽＾♡", "(๑•̀ㅂ•́)و✧", "(ง •̀_•́)ง", "(｡･ω･｡)ﾉ♡", "(☆_☆)", "(๑°3°๑)", "_(•̀ω•́ 」∠)_", "♪～(´ε｀　)", "～(^з^)-☆", "(´∀｀)♡", "ლ(´ڡ`ლ)", "(＞﹏＜)", "T_T", "⊙︿⊙", "〒▽〒", "⊙﹏⊙", "π_π", "(｡•́︿•̀｡)", "(ToT)/~~~", "╯﹏╰", "ಥ_ಥ", "(╥╯^╰╥)", "(〃′o`)", "●﹏●", "( •̥́ ˍ •̀ू )", "(つд⊂)", "心塞(´-ωก`)", "(╥﹏╥)", "┭┮﹏┭┮", "（；´д｀）ゞ", "(´;︵;`)", "(。﹏。)", "┗( T﹏T )┛", "QAQ", "ヘ(_ _ヘ)", "╰（‵□′）╯", "(*￣︿￣)", ">o<", "(-`ェ´-怒)", "ヽ(‘⌒´メ)ノ", "(*｀Ω´*)v", "(｡•ˇ‸ˇ•｡)", "(怒｀Д´怒)", "٩(๑`^´๑)۶", "(;｀O´)o", "╰_╯", "(#｀皿´)<怒怒怒!!!", "<(｀^´)>", "（｀Δ´）！", "ψ(｀∇´)ψ", "(；′⌒`)", "s(・｀ヘ´・;)ゞ", "(▼皿▼#)", "￣へ￣", "←_←", "（╯‵□′）╯︵┴─┴", "（▼へ▼メ）", "☄ฺ(◣д◢)☄ฺ", "→_→", "⊙_⊙", "d(ŐдŐ๑)", "Σ( ° △ °|||)︴", "(((φ(◎ロ◎;)φ)))", "⊙▽⊙", "(๑ŐдŐ)b", "╭(°A°`)╮", "(๑òᆺó๑)", "⊙ω⊙", "Σ(っ °Д °;)っ", " (ﾟДﾟ≡ﾟдﾟ)!?", "( *・ω・)✄╰ひ╯", "(⊙x⊙;)", "┌(。Д。)┐", "(°ー°〃)", "︽⊙_⊙︽", "!!!∑(°Д°ノ)ノ", "(๑ŐдŐ)b☆d(ŐдŐ๑)", "Σ⊙▃⊙川", "ヽ(*。>Д<)o゜", "━((*′д｀)爻(′д｀*))━!!!!", "=_=", "╮(╯_╰)╭", "（︶︿︶）", "_(:з」∠)_", "@_@", "╮(╯▽╰)╭", "(＠￣ー￣＠)", "_(:3」∠❀)_", "눈_눈", "╭(╯ε╰)╮", "(ー_ー)!!", "_(:D)∠)_", "o_O", "╭(╯^╰)╮", "(；一_一)", "´_>`", "-_-#", "┑(￣Д ￣)┍", "≡￣﹏￣≡", "○|￣|_", "-_-||", "ㄟ( ▔, ▔ )ㄏ", "( ＿ ＿)ノ｜壁", "▄█▀█●"]
   combing:
@@ -3336,16 +3365,18 @@ preset_keys:
   Keyboard_last_lock: { label: 返回, send: Eisu_toggle, select: .last_lock } #直接切換到下一键盘
   liquid_keyboard_exit: {label: 返回, send: function, command: liquid_keyboard, option: "-1"}  #退出liquidkeyboard
   liquid_keyboard_switch: { label: 更多, send: function, command: liquid_keyboard, option: "特殊" }
-  liquid_keyboard_switch2: { toggle: _liquid_keyboard, send: Mode_switch, states: [ 更多, 更多 ] }
+  liquid_keyboard_switch2: { toggle: _liquid_keyboard, send: SWITCH_CHARSET, states: [ 更多, 更多 ] }
   liquid_keyboard_tabs: { label: 更多, send: function, command: liquid_keyboard, option: "更多" }
   liquid_keyboard_emoji: { label: 🙂, send: function, command: liquid_keyboard, option: "emoji" }
   liquid_keyboard_clipboard: { label: 剪贴, send: function, command: liquid_keyboard, option: "剪贴" }
   # rime状态
-  Mode_switch: {toggle: ascii_mode, functional: false, send: Mode_switch, states: [ 中, 英 ]}
-  Zenkaku_Hankaku: {toggle: full_shape, send: Mode_switch, states: [ 半角, 全角 ]}
-  Henkan: {toggle: simplification, send: Mode_switch, states: [ 汉字, 汉字 ]}
-  Charset_switch: {toggle: extended_charset, send: Mode_switch, states: [ 常用, 增广 ]}
-  Punct_switch: {toggle: ascii_punct, send: Mode_switch, states: [ 。，, ．， ]}
+  # 注：toggle 类按键必须 send: SWITCH_CHARSET 才会走引擎的状态切换分支；
+  # 旧写法 send: Mode_switch 在 3.3.x 引擎中只发出无效键码，点击无反应
+  Mode_switch: {toggle: ascii_mode, functional: false, send: SWITCH_CHARSET, states: [ 中, 英 ]}
+  Zenkaku_Hankaku: {toggle: full_shape, send: SWITCH_CHARSET, states: [ 半角, 全角 ]}
+  Henkan: {toggle: simplification, send: SWITCH_CHARSET, states: [ 简, 繁 ]}
+  Charset_switch: {toggle: extended_charset, send: SWITCH_CHARSET, states: [ 常用, 增广 ]}
+  Punct_switch: {toggle: ascii_punct, send: SWITCH_CHARSET, states: [ 。，, ．， ]}
   # trime设置
   IME_switch: {label: 🌐, send: LANGUAGE_SWITCH} #彈出對話框選擇輸入法
   IME_last: {label: 上一输入法, send: LANGUAGE_SWITCH, select: .last} #直接切換到上一輸入法
@@ -3353,6 +3384,7 @@ preset_keys:
   Schema_switch: {label: 下一方案, functional: false, send: Control+Shift+1}
   Schema_Eng: {label: En, functional: true, send: Control+Shift+0}
   Theme_settings: {label: 主题, send: SETTINGS, option: "theme"}
+  menu_keyboard: {label: 菜单, send: function, command: menu_keyboard} #打开切换选项菜单（tool_bar 主按钮）
   Color_switch: {label: 配色, functional: false, send: PROG_RED}
   Help: {label: 说明, send: Help}
   Info: {label: 关于, send: INFO}
