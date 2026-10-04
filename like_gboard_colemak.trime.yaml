@@ -21,7 +21,7 @@ height:
 
 #鍵盤高度
 round_corner:
-  1: &round1 6 #按鍵圓角半徑（實測同文風渲染觀感約 6dp，對齊之）
+  1: &round1 8 #按鍵圓角半徑（按 commit 歷史中 Gboard 參考圖實測換算）
   2: &round2 0 #候選窗口圓角（對齊 tongwenfeng）
   3: &round3 50 #回車鍵圓角（膠囊形，還原原版 Gboard 風格）
 
@@ -33,7 +33,7 @@ style:
   candidate_spacing: 0.5  #候選分割線寬度（dp，與 trime.yaml 默認一致）
   candidate_text_size: 18 #候選字號（對齊 tongwenfeng）
   candidate_use_cursor: true #候選光標高亮（對齊 tongwenfeng）
-  candidate_corner_radius: 6 #候選高亮背景圓角（與按鍵圓角一致）
+  candidate_corner_radius: *round1 #候選高亮背景圓角（與按鍵圓角一致）
   candidate_view_height: 28 #候選高亮塊高度（chip 實際高度取此值，對齊 tongwenfeng）
   comment_height: 14 #編碼提示區高度（對齊 tongwenfeng；comment_position: right 時僅參與候選欄總高度）
   color_scheme: default #配色方案（新版改爲在 Trime 設置中選擇，此鍵已無效但保留）
@@ -117,7 +117,7 @@ tool_bar:
   primary_button:
     background:
       type: circle # 高亮形狀 circle|rectangle
-      corner_radius: 10
+      corner_radius: *round1 # 與按鍵圓角一致
       normal: 0x00 # 正常狀態背景（透明）
       highlight: hilited_candidate_button_color # 高亮狀態背景色
       vertical_inset: 4
