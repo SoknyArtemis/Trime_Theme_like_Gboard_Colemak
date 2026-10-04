@@ -17,11 +17,11 @@ height:
   4: &jpgd4 48 #主鍵盤（對齊 tongwenfeng key_height）
   5: &jpgd5 39.5 #符號鍵盤（tongwenfeng 的 symbols/numberb 均爲 39.5）
   6: &hgap 4 #鍵盤橫縫大小（dp），對齊 tongwenfeng
-  7: &sgap 8 #鍵盤豎縫大小（dp），對齊 tongwenfeng
+  7: &sgap 10 #鍵盤豎縫大小（dp），實測對齊同文風觀感（鍵矮縫大）
 
 #鍵盤高度
 round_corner:
-  1: &round1 12 #按鍵圓角半徑（對齊 tongwenfeng）
+  1: &round1 6 #按鍵圓角半徑（實測同文風渲染觀感約 6dp，對齊之）
   2: &round2 0 #候選窗口圓角（對齊 tongwenfeng）
   3: &round3 50 #回車鍵圓角（膠囊形，還原原版 Gboard 風格）
 
@@ -33,7 +33,7 @@ style:
   candidate_spacing: 0.5  #候選分割線寬度（dp，與 trime.yaml 默認一致）
   candidate_text_size: 18 #候選字號（對齊 tongwenfeng）
   candidate_use_cursor: true #候選光標高亮（對齊 tongwenfeng）
-  candidate_corner_radius: 14 #候選高亮背景圓角（膠囊：高度28的一半）
+  candidate_corner_radius: 6 #候選高亮背景圓角（與按鍵圓角一致）
   candidate_view_height: 28 #候選高亮塊高度（chip 實際高度取此值，對齊 tongwenfeng）
   comment_height: 14 #編碼提示區高度（對齊 tongwenfeng；comment_position: right 時僅參與候選欄總高度）
   color_scheme: default #配色方案（新版改爲在 Trime 設置中選擇，此鍵已無效但保留）
@@ -3385,7 +3385,7 @@ preset_keys:
   # 舊寫法 send: Mode_switch 在 3.3.x 引擎中只發出無效鍵碼，點擊無反應
   Mode_switch: {toggle: ascii_mode, functional: false, send: SWITCH_CHARSET, states: [ 中, 英 ]}
   Zenkaku_Hankaku: {toggle: full_shape, send: SWITCH_CHARSET, states: [ 半角, 全角 ]}
-  Henkan: {toggle: simplification, send: SWITCH_CHARSET, states: [ 簡, 繁 ]}
+  Henkan: {toggle: traditionalization, send: SWITCH_CHARSET, states: [ 簡, 繁 ]} #選項名對應方案 switches（rime_ice 為 traditionalization）
   Charset_switch: {toggle: extended_charset, send: SWITCH_CHARSET, states: [ 常用, 增廣 ]}
   Punct_switch: {toggle: ascii_punct, send: SWITCH_CHARSET, states: [ 。，, ．， ]}
   # trime設置
