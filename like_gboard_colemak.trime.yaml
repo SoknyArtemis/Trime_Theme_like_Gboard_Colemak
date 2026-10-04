@@ -221,6 +221,7 @@ colors:
   17: &color17 0xff6495C0 #回車鍵背景（淺色主題色，取自截圖 #6495C0）
   18: &color18 0xffC9CBC8 #高亮功能背景
   19: &color19 0xffD8DBE0 #高亮候選背景
+  20: &color20 0xffD5E4F7 #功能鍵淺藍（取自 Gboard 參考圖）
   
 #配色方案
 preset_color_schemes:
@@ -233,8 +234,9 @@ preset_color_schemes:
     candidate_text_color: *color13 #候選文本
     comment_text_color: *color13 #提示
     hilited_back_color: *color14 #高亮編碼背景
-    hilited_candidate_back_color: *color19 #高亮候選背景
+    hilited_candidate_back_color: *color20 #高亮候選背景（淺藍）
     hilited_candidate_text_color: *color13 #高亮候選文本
+    hilited_candidate_button_color: *color20 #候選欄按鈕高亮（淺藍）
     hilited_comment_text_color: *color13 #高亮提示
     hilited_key_back_color: *color12 #高亮按鍵背景
     hilited_key_symbol_color: *color14 #高亮按鍵符號
@@ -247,7 +249,7 @@ preset_color_schemes:
     key_text_color: *color13 #按鍵文本
     keyboard_back_color: *color12 #鍵盤背景
     label_color: *color17 #標籤
-    off_key_back_color: *color15  #按鍵關閉狀態背景
+    off_key_back_color: *color20  #按鍵關閉狀態背景（淺藍）
     off_key_text_color: *color8 #按鍵關閉狀態文本
     popup_back_color: *color2 #按鍵提示背景
     popup_text_color: *color13 #按鍵提示文本
@@ -257,10 +259,10 @@ preset_color_schemes:
     tkg: *color13 #空格鍵文字顏色
     benter: *color17 #回車鍵背景色
     tenter: *color14 #回車鍵文字顏色
-    bgn: *color15 #功能鍵背景色
+    bgn: *color20 #功能鍵背景色（淺藍）
     tgn: *color13 #功能鍵文字顏色
-    bbs: *color15 #退格鍵背景色
-    tbs: *color14 #退格鍵文字顏色
+    bbs: *color20 #退格鍵背景色（淺藍）
+    tbs: *color13 #退格鍵文字顏色
     baoe: *color14 #aoeiu背景色
     taoe: *color17 #aoeiu文字顏色
     bh1: *color14 #第一行背景色
@@ -271,7 +273,7 @@ preset_color_schemes:
     th3: *color13 #第三行文字顏色
     bh4: *color14 #第四行背景色
     th4: *color13 #第四行文字顏色
-    num: *color15 #數字鍵顏色
+    num: *color20 #數字鍵顏色（淺藍）
     ntb: *color13 #數字鍵文字顏色
     gnb: *color18 #高亮功能鍵
 
@@ -283,8 +285,9 @@ preset_color_schemes:
     candidate_text_color: *color1 #候選文本
     comment_text_color: *color1 #提示
     hilited_back_color: *color2 #高亮編碼背景
-    hilited_candidate_back_color: *color10 #高亮候選背景
-    hilited_candidate_text_color: *color1 #高亮候選文本
+    hilited_candidate_back_color: *color20 #高亮候選背景（淺藍，與淺色模式統一）
+    hilited_candidate_text_color: *color5 #高亮候選文本（淺藍底配深色文字）
+    hilited_candidate_button_color: *color20 #候選欄按鈕高亮（淺藍）
     hilited_comment_text_color: *color1 #高亮提示
     hilited_key_back_color: *color3 #高亮按鍵背景
     hilited_key_symbol_color: *color2 #高亮按鍵符號
@@ -297,7 +300,7 @@ preset_color_schemes:
     key_text_color: *color1 #按鍵文本
     keyboard_back_color: *color3 #鍵盤背景
     label_color: *color6 #標籤
-    off_key_back_color: *color4  #按鍵關閉狀態背景
+    off_key_back_color: *color20  #按鍵關閉狀態背景（淺藍，與淺色模式統一）
     off_key_text_color: *color8 #按鍵關閉狀態文本
     popup_back_color: *color2 #按鍵提示背景
     popup_text_color: *color1 #按鍵提示文本
@@ -307,10 +310,10 @@ preset_color_schemes:
     tkg: *color1 #空格鍵文字顏色
     benter: *color6 #回車鍵背景色
     tenter: *color5 #回車鍵文字顏色
-    bgn: *color4 #功能鍵背景色
-    tgn: *color1 #功能鍵文字顏色
-    bbs: *color4 #退格鍵背景色
-    tbs: *color2 #退格鍵文字顏色
+    bgn: *color20 #功能鍵背景色（淺藍，與淺色模式統一）
+    tgn: *color5 #功能鍵文字顏色（淺藍底配深色文字）
+    bbs: *color20 #退格鍵背景色（淺藍，與淺色模式統一）
+    tbs: *color5 #退格鍵文字顏色
     baoe: *color2 #aoeiu背景色
     taoe: *color6 #aoeiu文字顏色
     bh1: *color2 #第一行背景色
@@ -321,7 +324,7 @@ preset_color_schemes:
     th3: *color1 #第三行文字顏色
     bh4: *color2 #第四行背景色
     th4: *color1 #第四行文字顏色
-    num: *color7 #數字鍵顏色
+    num: *color20 #數字鍵顏色（淺藍，與淺色模式統一）
     ntb: *color5 #數字鍵文字顏色
     gnb: *color11 #高亮功能鍵
 
