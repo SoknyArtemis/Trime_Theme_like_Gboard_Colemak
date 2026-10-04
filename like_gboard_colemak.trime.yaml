@@ -285,9 +285,8 @@ preset_color_schemes:
     candidate_text_color: *color1 #候選文本
     comment_text_color: *color1 #提示
     hilited_back_color: *color2 #高亮編碼背景
-    hilited_candidate_back_color: *color20 #高亮候選背景（淺藍，與淺色模式統一）
-    hilited_candidate_text_color: *color5 #高亮候選文本（淺藍底配深色文字）
-    hilited_candidate_button_color: *color20 #候選欄按鈕高亮（淺藍）
+    hilited_candidate_back_color: *color10 #高亮候選背景（深色模式維持原配色）
+    hilited_candidate_text_color: *color1 #高亮候選文本
     hilited_comment_text_color: *color1 #高亮提示
     hilited_key_back_color: *color3 #高亮按鍵背景
     hilited_key_symbol_color: *color2 #高亮按鍵符號
@@ -300,7 +299,7 @@ preset_color_schemes:
     key_text_color: *color1 #按鍵文本
     keyboard_back_color: *color3 #鍵盤背景
     label_color: *color6 #標籤
-    off_key_back_color: *color20  #按鍵關閉狀態背景（淺藍，與淺色模式統一）
+    off_key_back_color: *color4  #按鍵關閉狀態背景
     off_key_text_color: *color8 #按鍵關閉狀態文本
     popup_back_color: *color2 #按鍵提示背景
     popup_text_color: *color1 #按鍵提示文本
@@ -310,10 +309,10 @@ preset_color_schemes:
     tkg: *color1 #空格鍵文字顏色
     benter: *color6 #回車鍵背景色
     tenter: *color5 #回車鍵文字顏色
-    bgn: *color20 #功能鍵背景色（淺藍，與淺色模式統一）
-    tgn: *color5 #功能鍵文字顏色（淺藍底配深色文字）
-    bbs: *color20 #退格鍵背景色（淺藍，與淺色模式統一）
-    tbs: *color5 #退格鍵文字顏色
+    bgn: *color4 #功能鍵背景色（深色模式維持原配色）
+    tgn: *color1 #功能鍵文字顏色
+    bbs: *color4 #退格鍵背景色
+    tbs: *color2 #退格鍵文字顏色
     baoe: *color2 #aoeiu背景色
     taoe: *color6 #aoeiu文字顏色
     bh1: *color2 #第一行背景色
@@ -324,7 +323,7 @@ preset_color_schemes:
     th3: *color1 #第三行文字顏色
     bh4: *color2 #第四行背景色
     th4: *color1 #第四行文字顏色
-    num: *color20 #數字鍵顏色（淺藍，與淺色模式統一）
+    num: *color7 #數字鍵顏色
     ntb: *color5 #數字鍵文字顏色
     gnb: *color11 #高亮功能鍵
 
