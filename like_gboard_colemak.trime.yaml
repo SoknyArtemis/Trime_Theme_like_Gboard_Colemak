@@ -222,6 +222,7 @@ colors:
   18: &color18 0xffC9CBC8 #高亮功能背景
   19: &color19 0xffD8DBE0 #高亮候選背景
   20: &color20 0xffD5E4F7 #功能鍵淺藍（取自 Gboard 參考圖）
+  21: &color21 0xffC4D4E4 #功能鍵按壓色（取自 Gboard 參考圖，比淺藍深一檔）
   
 #配色方案
 preset_color_schemes:
@@ -241,7 +242,7 @@ preset_color_schemes:
     hilited_key_back_color: *color12 #高亮按鍵背景
     hilited_key_symbol_color: *color14 #高亮按鍵符號
     hilited_key_text_color: *color16 #高亮按鍵文本
-    hilited_off_key_back_color: *color14 #高亮按鍵關閉狀態背景
+    hilited_off_key_back_color: *color21 #高亮按鍵關閉狀態背景（功能鍵按壓色）
     hilited_off_key_text_color: *color1 #高亮按鍵關閉狀態文本
     hilited_text_color: *color13 #高亮編碼
     key_back_color: *color14 #按鍵背景
@@ -275,7 +276,7 @@ preset_color_schemes:
     th4: *color13 #第四行文字顏色
     num: *color20 #數字鍵顏色（淺藍）
     ntb: *color13 #數字鍵文字顏色
-    gnb: *color18 #高亮功能鍵
+    gnb: *color21 #高亮功能鍵（按壓色）
 
   dark:
     name: "藍色夜間"  #方案名稱
